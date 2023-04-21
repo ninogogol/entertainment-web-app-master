@@ -1,0 +1,23 @@
+[
+  {
+    "username": "test@test.com",
+    "password": "$2a$10$DDAnjmYU1qHR.G9tQ.boNeMbfflMgVssqAm.v5VIpIaRb2xiMzVUq",
+    "bookmarks": [
+      "e8805d7b-f44f-4db0-ae69-c072d2455c4c",
+      "9cb03660-e35e-49ea-8567-6bab1e619ba4",
+      "adb0d295-b28a-4b79-9c0e-91df283df953",
+      "3bfda557-a140-4e72-81d9-f4458435b6fc",
+      "695031b1-259f-45d4-8d8a-24390bcb119b",
+      "531a49d5-2f54-4ba4-aa0f-eec68cabfb48"
+    ]
+  },
+  {
+    "username": "muster@muster.com",
+    "password": "$2a$10$fO64ymQfexzkYoarYErjPuc8xABVfq9DcAyaTMIGcIC3NZn6ZlReC",
+    "bookmarks": [
+      "e83d2425-1294-4c16-96d4-7beeecc614cf",
+      "e8805d7b-f44f-4db0-ae69-c072d2455c4c",
+      "adb0d295-b28a-4b79-9c0e-91df283df953"
+    ]
+  }
+]

@@ -1,0 +1,134 @@
+@font-face {
+    font-family: 'Outfit', sans-serif;
+    src: url('../fonts/Outfit-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Outfit', sans-serif;
+    src: url('../fonts/Outfit-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+:root {
+    --red: #FC4747;
+    --dark-blue: #10141E;
+    --greyish-blue: #5A698F;
+    --semi-dark-blue: #161D2F;
+    --pure-white: #FFFFFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background-color: var(--dark-blue);
+    margin: 24px;
+}
+
+header img {
+    margin: 48px auto 58px;
+    display: block;
+}
+
+.container {
+    background-color: var(--semi-dark-blue);
+    width: 100%;
+    max-width: 327px;
+    min-height: 365px;
+    margin: 0 auto;
+    padding: 24px;
+    border-radius: 10px;
+}
+
+h1 {
+    font-weight: 300;
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: -0.5px;
+    color: var(--pure-white);
+    margin-bottom: 40px;
+}
+
+form input {
+    background-color: transparent;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 19px;
+    color: var(--pure-white);
+    margin-bottom: 17px;
+    padding-left: 10px;
+    caret-color: var(--red);
+}
+
+form input::placeholder {
+    color: var(--greyish-blue);
+}
+
+form input:focus {
+    outline: none;
+}
+
+hr {
+    height: 1px;
+    background-color: var(--greyish-blue);
+    margin-bottom: 24px;
+}
+
+button {
+    width: 100%;
+    height: 48px;
+    border-radius: 6px;
+    background-color: var(--red);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 19px;
+    color: var(--pure-white);
+    margin-top: calc(40px - 17px);
+    margin-bottom: 24px;
+    transition: 0.3s;
+}
+
+p {
+    text-align: center;
+    color: var(--pure-white);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 19px;
+}
+
+p a {
+    color: var(--red);
+    text-decoration: none;
+    padding-left: 8px;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 19px;
+}
+
+/* Styles for Tablet */
+@media only screen and (min-width: 768px) {
+    header img {
+        margin: 80px auto 72px;
+    }
+    .container {
+        max-width: 400px;
+        padding: 32px;
+    }
+}
+
+/* Styles for Desktop */
+@media only screen and (min-width: 992px) {
+    button:hover {
+        background-color: var(--pure-white);
+        color: var(--semi-dark-blue);
+        transition: 0.3s;
+        cursor: pointer;
+    }
+}

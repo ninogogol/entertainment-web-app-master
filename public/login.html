@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/logo.svg">
+  <link rel="stylesheet" href="./css/auth.css">
+  <title>Entertainment Web App</title>
+</head>
+<body>
+  <header>
+    <img src="./assets/logo.svg" alt="logo">
+  </header>
+  
+  <main>
+    <div class="container">
+      <h1>Login</h1>
+      <form id="login-form">
+        <input type="email" name="username" id="email" placeholder="Email address" required>
+        <hr>
+        <input type="password" name="password" id="password" placeholder="Password" required>
+        <hr>
+        <button type="submit">Login to your account</button>
+      </form>
+      <p>Don't have an account?<a href="signup.html">Sign Up</a></p>  
+    </div>
+  </main>
+
+  <script src="./lib/axios.min.js"></script>
+  <script src="./js/login.js"></script>
+</body>
+</html>
