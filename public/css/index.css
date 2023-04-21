@@ -373,6 +373,17 @@ img[alt="thumbnails"] {
         max-width: 1200px;
         margin: 0 auto;
     }
+    main section:first-child {
+        margin-left: 60px;
+    }
+    #trending-container {
+        width: 90%;
+        margin: 25px auto 39px
+    }
+    h1,
+    h2 {
+    margin-left: 60px;
+    }
     #recommended-container {
         grid-template-columns: auto auto auto auto;
         justify-content: center;
