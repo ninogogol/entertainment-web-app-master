@@ -14,9 +14,11 @@
 :root {
     --red: #FC4747;
     --dark-blue: #10141E;
+    --dark-blue-less-opacity: #10141e7d;
     --greyish-blue: #5A698F;
     --semi-dark-blue: #161D2F;
     --pure-white: #FFFFFF;
+    --pure-white-less-opacity: #ffffff80;
 }
 
 * {
@@ -35,6 +37,12 @@ html {
 body {
     background-color: var(--dark-blue);
     overflow-x: hidden;
+}
+
+main {
+    width: 100%;
+    max-width: 375px;
+    margin: 0 auto;
 }
 
 header {
@@ -89,6 +97,28 @@ header a.active svg path {
     fill: var(--pure-white);
 }
 
+header button:hover {
+    background-color: var(--pure-white);
+    color: var(--semi-dark-blue);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+header a:hover svg path {
+    fill: var(--red)
+}
+
+header a.active:hover svg path {
+    fill: var(--pure-white)
+}
+
+header button:hover {
+    background-color: var(--pure-white);
+    color: var(--semi-dark-blue);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
 main section:first-child {
     display: flex;
     align-items: center;
@@ -103,7 +133,6 @@ input#search {
     font-weight: 300;
     font-size: 16px;
     line-height: 20px;
-    opacity: 0.5;
     width: 224px;
     height: 20px;
     margin-left: 16px;
@@ -129,17 +158,35 @@ img[alt="thumbnails"] {
     width: 100%;
 }
 
-.play {
-    width: 117px;
-    height: 48px;
-    opacity: 0;
-    border-radius: 28.5px;
-    background-color: var(--dark-blue);
+.bookmark {
+    width: 32px;
+    height: 32px;
+    background-color: var(--dark-blue-less-opacity);
+    border-radius: 50%;
     display: flex;
+    justify-content: center;
     align-items: center;
     position: absolute;
     z-index: 2;
+    right: 18px;
+    top: 18px;
+    transition: 0.3s;
+}
+.bookmark:hover {
+    background-color: var(--dark-blue);
+    transition: 0.3s;
+}
+
+.show:hover .play img {
+    position: absolute;
+    z-index: 1;
     top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#recommended-container .show:hover .play img {
+    top: calc(50% - 22.82px);
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -170,21 +217,6 @@ img[alt="thumbnails"] {
     border-radius: 8px;
     position: relative;
     cursor: pointer;  
-}
-
-.bookmark {
-    width: 32px;
-    height: 32px;
-    background-color: var(--dark-blue);
-    border-radius: 50%;
-    opacity: 0.5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    z-index: 2;
-    right: 18px;
-    top: 18px;
 }
 
 #trending-container .info {
@@ -233,6 +265,7 @@ img[alt="thumbnails"] {
     align-items: center;
     gap: 15px;
     margin-block: 21px 61px;
+    cursor: pointer;
 }
 
 #recommended-container .show {
@@ -265,6 +298,9 @@ img[alt="thumbnails"] {
 
 /* Styles for Tablet */
 @media only screen and (min-width: 768px) {
+    main {
+        max-width: 768px;
+    }
     header {
         max-width: 719px;
         margin: 24px auto 34px;
@@ -289,9 +325,7 @@ img[alt="thumbnails"] {
         height: 30px;
         font-size: 24px;
         line-height: 30px;
-        opacity: 0.5;
         margin-left: 24px;
-        outline: none;
     }
     main section:first-child {
         margin: 0 25px 34px;
@@ -312,14 +346,17 @@ img[alt="thumbnails"] {
     }
     #recommended-container {
         grid-template-columns: auto auto auto;
-        justify-content: center;
-        align-items: center;
         gap: 30px;    
     }
     #recommended-container .show {
         max-width: 220px;
         height: 206px;
     }
+    #recommended-container .play img {
+        top: calc(50% - 33px);
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }    
     #recommended-container .info {
         font-size: 13px;
         line-height: 16px;
@@ -334,47 +371,27 @@ img[alt="thumbnails"] {
 
 
 /* Styles for Desktop */
-@media only screen and (min-width: 992px) {
-    header button:hover {
-        background-color: var(--pure-white);
-        color: var(--semi-dark-blue);
-        transition: 0.3s;
-        cursor: pointer;
-    }
-    header a:hover svg path {
-        fill: var(--red)
-    }
-    header a.active:hover svg path {
-        fill: var(--pure-white)
-    }
-    header button:hover {
-        background-color: var(--pure-white);
-        color: var(--semi-dark-blue);
-        transition: 0.3s;
-        cursor: pointer;
-    }
-    .show:hover .play {
-        opacity: 0.50;
-    }
-    .show:hover .play img[alt="play icon"] {
-        opacity: 1;
-        position: absolute;
-        left: 10px;
-    }
-    .show:hover .play span {
-        opacity: 1;
-        position: absolute;
-        right: 20px;
-        font-weight: 500;
-        font-size: 18px;
-        line-height: 23px;
-    }
+@media only screen and (min-width: 1200px) {
     main {
         max-width: 1200px;
+    }
+    header {
+        width: 100%;
+        max-width: initial;
+        border-radius: initial;
+        margin: 0 auto 34px;
+        padding: 24px;
+    }
+    header nav {
+        max-width: 1080px;
+        margin: 0 auto;
+    }
+    main {
         margin: 0 auto;
     }
     main section:first-child {
         margin-left: 60px;
+        margin-top: 64px;
     }
     #trending-container {
         width: 90%;
@@ -386,8 +403,6 @@ img[alt="thumbnails"] {
     }
     #recommended-container {
         grid-template-columns: auto auto auto auto;
-        justify-content: center;
-        align-items: center;
         gap: 40px;    
     }
     #recommended-container .show {
@@ -395,9 +410,55 @@ img[alt="thumbnails"] {
         height: 230px;
         cursor: pointer;
     }
+    .show:hover .play img {
+        position: initial;
+        z-index: initial;
+        top: initial;
+        left: initial;
+        transform: initial;
+    }
+    
+    #recommended-container .show:hover .play img {
+        top: initial;
+        left: initial;
+        transform: initial;
+    }
+    .play {
+        width: 117px;
+        height: 48px;
+        opacity: 0;
+        border-radius: 28.5px;
+        background-color: var(--pure-white-less-opacity);
+        display: flex;
+        align-items: center;
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
     #recommended-container .play {
         top: calc(50% - 38.64px);
         left: 50%;
         transform: translate(-50%, -50%);
+    }    
+    .show:hover .play {
+        opacity: 1;
+    }
+    .show:hover .play img[alt="play icon"] {
+        opacity: 1;
+        position: absolute;
+        left: 10px !important;
+    }
+    .show:hover .play span {
+        opacity: 1;
+        position: absolute;
+        right: 20px;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 23px;
+    }
+    .show:hover img[alt="thumbnails"] {
+        opacity: 0.5;
     }
 }

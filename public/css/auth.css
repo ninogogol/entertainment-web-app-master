@@ -56,6 +56,10 @@ h1 {
     margin-bottom: 40px;
 }
 
+form {
+    position: relative;
+}
+
 form input {
     background-color: transparent;
     font-weight: 300;
@@ -110,6 +114,21 @@ p a {
     font-weight: 300;
     font-size: 15px;
     line-height: 19px;
+}
+
+.error-msg-password, .error-msg-email {
+    color: var(--red);
+    position: absolute;
+}
+
+.error-msg-password {
+    right: 0;
+    top: 60px;
+}
+
+.error-msg-email {
+    right: 0;
+    top: 0px;
 }
 
 /* Styles for Tablet */

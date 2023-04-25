@@ -25,8 +25,8 @@ app.get('/', (req, res) => {
 })
 
 // Set up static file serving after the login route
-app.use(express.static(path.join(__dirname, 'public')))
 app.use('/authenticated', authenticate, express.static(path.join(__dirname, 'public', 'authenticated')))
+app.use(express.static(path.join(__dirname, 'public')))
 
 // Handle sign-up requests
 app.post('/signup', (req, res) => {
@@ -116,9 +116,12 @@ app.post('/bookmark', authenticate, (req, res) => {
 
 // Middleware to authenticate user requests
 function authenticate(req, res, next) {
-  const token = req.headers.authorization?.split(' ')[1]
+  const tokenHeader = req.headers.authorization?.split(' ')[1]
+  //für den aufruf statischer dateien aus den authenticated
+  const token = tokenHeader ? tokenHeader : req.query.token
   if (!token) {
-    return res.status(401).json({ message: 'No token provided' })
+    return res.redirect('../login.html')
+    //return res.status(401).json({ message: 'No token provided' })
   }
 
   try {
@@ -126,7 +129,8 @@ function authenticate(req, res, next) {
     req.username = decoded.username;
     next()
   } catch (err) {
-    res.status(401).json({ message: 'Invalid token' })
+    //res.status(401).json({ message: 'Invalid token' })
+    res.redirect('../login.html')
   }
 }
 

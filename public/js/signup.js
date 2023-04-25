@@ -1,4 +1,5 @@
 const registerForm = document.getElementById('register-form')
+const errorMsg = document.createElement('div')
 
 registerForm.addEventListener('submit', (event) => {
   event.preventDefault()
@@ -9,6 +10,18 @@ registerForm.addEventListener('submit', (event) => {
 
   if (password !== repeatPassword) {
     alert('The entered passwords do not match. Please check them and try again.')
+    return
+  }
+  if(email === '') {
+    errorMsg.className = 'error-msg-email'
+    errorMsg.innerText = 'Can’t be empty'
+    registerForm.prepend(errorMsg)
+    return
+  }
+  if(password === '') {
+    errorMsg.className = 'error-msg-password'
+    errorMsg.innerText = 'Can’t be empty'
+    registerForm.prepend(errorMsg)
     return
   }
 

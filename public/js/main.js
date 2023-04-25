@@ -14,7 +14,6 @@ const filterBookmarks = document.getElementById('filter-bookmarks')
 // Call the checkToken function
 checkToken()
 
-
 // Function to fetch trending shows from the server and display them
 const getTrendingShows = () => {
   axios.get('/data', {
@@ -87,8 +86,8 @@ const getTvSeries = () => {
     })
 }
 
-// Function to fetch all Bookmarked shows from the server and display them
-const getBookmarks = () => {
+// Update the locally stored bookmark list
+const loadBookmarks = () => {
   axios.get('/data', {
     headers: {Authorization: `Bearer ${localStorage.getItem('token')}`},
     params: {bookmarks: 'true'}
@@ -97,15 +96,34 @@ const getBookmarks = () => {
       if(axiosObj.data.error) {
         console.log('Server Error', axiosObj.data.error)
       } else {
-        //Display bookmarked shows
-        const bookmarked = axiosObj.data
-        displayResults(bookmarked, recommendedContainer)
+        bookmarks = axiosObj.data
       }
     })
     .catch(err => {
       console.log('Error', err.name, err.message)
     })
 }
+
+// Initialize bookmarks variable to null
+let bookmarks = null
+
+// Function to display all bookmarked shows if the global 'bookmarks' variable is not empty
+const getBookmarks = () => {
+      if(!bookmarks) {
+        console.log('Bookmarks could not be loaded (Global variable bookmarks is empty)')
+      } else {
+        //Display bookmarked shows
+        displayResults(bookmarks, recommendedContainer)
+      }
+}
+
+/**
+ * Checks if a show is in the bookmarks list by its ID.
+ *
+ * @param {string} showId The ID of the show to check for in the bookmarks list.
+ * @returns {boolean} Returns true if the show is in the bookmarks list, otherwise returns false.
+ */
+const isBookmark = (showId) => bookmarks.some(show => show.id === showId)
 
 /**
  * Toggles the bookmark status of a show by its ID. Sends a GET request to the
@@ -114,28 +132,23 @@ const getBookmarks = () => {
  * @param {string} showId - The ID of the show to toggle the bookmark status for.
  */
 const toggleBookmark = (showId) => {
-  axios.get('/data', {
-    headers: {Authorization: `Bearer ${localStorage.getItem('token')}`},
-    params: {bookmarks: 'true'}
+
+  const isBookmarked = isBookmark(showId)
+  axios.post('/bookmark', {id: showId, bookmarked: !isBookmarked}, {
+    headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+  })    
+    .then(res => {
+      console.log(res.data.message)
+      loadBookmarks()
   })
-    .then(axiosObj => {
-      const isBookmarked = axiosObj.data.some(show => show.id === showId)
-      axios.post('/bookmark', {id: showId, bookmarked: !isBookmarked}, {
-        headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
-      })    
-        .then(res => {
-        console.log(res.data.message)
-      })
-        .catch(err => {
-          console.log('Error', err.name, err.message)
-        })
-    })
     .catch(err => {
       console.log('Error', err.name, err.message)
     })
+
 }
 
-// Call the getTrendingShows and getAllshows functions to fetch and display trending movies
+// Load bookmarks, trending shows, and all shows on page load
+loadBookmarks()
 getTrendingShows()
 getAllShows()
 
@@ -143,13 +156,16 @@ getAllShows()
 /**
  * @param {Array<Object} data 
  * @param {HTMLElement} container 
- * Displays movie data within the specified container element.
+ * Displays show data within the specified container element.
  */
 const displayResults = (data, container) => {
 
   container.innerHTML = ''
 
   data.forEach(show => {
+
+    const isBookmarked = isBookmark(show.id)
+    const bookmarkIconName = isBookmarked ? 'icon-bookmark-full.svg' : 'icon-bookmark-empty.svg'
     
     const thumbnail = show.thumbnail.regular.medium
     const title = show.title
@@ -162,7 +178,7 @@ const displayResults = (data, container) => {
     showElement.innerHTML = `
       <img src=".${thumbnail}" alt="thumbnails">
       <div class="bookmark">
-        <img src="../assets/icon-bookmark-empty.svg" alt="bookmark icon">
+        <img src="../assets/${bookmarkIconName}" alt="bookmark icon">
       </div>
       <div class="play">
         <img src="../assets/icon-play.svg" alt="play icon">
@@ -189,6 +205,7 @@ Event listeners for filters: Home, Movies, TV Series, Bookmarks.
 Updates displayed content and active navigation state based on filter.
 */
 filterHome.addEventListener('click', () => {
+  search.value = ''
   trendingContainer.style.display = null
   h1.style.display = null
   navigation.forEach(navItem => {
@@ -201,6 +218,7 @@ filterHome.addEventListener('click', () => {
 })
 
 filterMovie.addEventListener('click', () => {
+  search.value = ''
   navigation.forEach(navItem => {
     navItem.classList.remove('active')
   })
@@ -213,6 +231,7 @@ filterMovie.addEventListener('click', () => {
 })
 
 filterTVSeries.addEventListener('click', () => {
+  search.value = ''
   navigation.forEach(navItem => {
     navItem.classList.remove('active')
   })
@@ -225,6 +244,7 @@ filterTVSeries.addEventListener('click', () => {
 })
 
 filterBookmarks.addEventListener('click', () => {
+  search.value = ''
   navigation.forEach(navItem => {
     navItem.classList.remove('active')
   })
@@ -255,6 +275,88 @@ const addBookmarkClickListener = (showId, bookmarkIcon) => {
   })
 }
 
+/**
+ * Searches for shows based on the search term and the active filter, and displays the results.
+ * @param {function} displayResults A function that takes the filtered shows and a container element
+ *                                  to display the results.
+ */
+const searchShows = (displayResults) => {
+  search.addEventListener('input', () => {
+    const searchTerm = search.value.toLowerCase();
+
+    // Determine the active filter
+    const activeFilter = document.querySelector('header nav ul li a.active')
+    let filter
+    if (activeFilter) {
+      filter = activeFilter.id.replace('filter-', '')
+    } else {
+      filter = 'home'
+    }
+
+    axios.get('/data', {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+    })
+      .then(axiosObj => {
+        if (axiosObj.data.error) {
+          console.log('Server Error', axiosObj.data.error)
+        } else {
+          let filteredShows
+
+          // Filter shows based on the active filter and the search term
+          switch (filter) {
+            case 'home':
+              filteredShows = axiosObj.data
+              break
+            case 'movie':
+              filteredShows = axiosObj.data.filter(show => show.category === 'Movie')
+              break
+            case 'tv-series':
+              filteredShows = axiosObj.data.filter(show => show.category === 'TV Series')
+              break
+            case 'bookmarks':
+              filteredShows = bookmarks
+              break
+          }
+
+          // Further filter the shows based on the search term
+          filteredShows = filteredShows.filter(show => show.title.toLowerCase().includes(searchTerm))
+          
+          // Update the h2 element with the number of results found
+          if (searchTerm) {
+            h2.innerText = `Found ${filteredShows.length} results for '${searchTerm}'`
+            trendingContainer.style.display = 'none'
+            h1.style.display = 'none'
+          } else {
+            switch (filter) {
+              case 'home':
+                h2.innerText = 'Recommended'
+                trendingContainer.style.display = null
+                h1.style.display = null
+                break
+              case 'movie':
+                h2.innerText = 'Movies'
+                break
+              case 'tv-series':
+                h2.innerText = 'TV Series'
+                break
+              case 'bookmarks':
+                h2.innerText = 'Bookmarked Shows'
+                break
+            }
+          }
+          
+          // Display the filtered shows using the displayResults function
+          displayResults(filteredShows, recommendedContainer)
+        }
+      })
+      .catch(err => {
+        console.log('Error', err.name, err.message)
+      })
+  })
+}
+
+searchShows(displayResults)
+
 /* LOG OUT function 
 remove the 'token' from local storage and 
 redirect the user to the login page.*/
@@ -268,7 +370,7 @@ function checkToken() {
   const token = localStorage.getItem('token')
   if(!token) {
     alert('Please sign in') 
-    window.location.href = '/'
-    console.log(window.location.href)
+    // window.location.href = '/'
+    // console.log(window.location.href)
   }
 }
