@@ -25,5 +25,15 @@
       "531a49d5-2f54-4ba4-aa0f-eec68cabfb48",
       "2c7b3cb4-b85d-42b5-ab62-f7bb35b0f839"
     ]
+  },
+  {
+    "username": "testuser@testuser.com",
+    "password": "$2a$10$IC32lMLDX/qDmy.qx9CKDuQAN1UsBzExcuMHsK2ABibDFO6vrCBT2",
+    "bookmarks": [
+      "e83d2425-1294-4c16-96d4-7beeecc614cf",
+      "8d5823fb-5338-4218-800f-c0abdbe0bbc9",
+      "934a88f1-765c-451f-8b7d-4d9acdb79426",
+      "8b1bf1db-20b0-4d3b-b0b3-ea4abddea211"
+    ]
   }
 ]

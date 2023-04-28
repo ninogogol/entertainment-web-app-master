@@ -12,7 +12,7 @@ const filterTVSeries = document.getElementById('filter-tv-series')
 const filterBookmarks = document.getElementById('filter-bookmarks')
 
 // Call the checkToken function
-checkToken()
+//checkToken()
 
 // Function to fetch trending shows from the server and display them
 const getTrendingShows = () => {
@@ -193,6 +193,15 @@ const displayResults = (data, container) => {
     `
     container.appendChild(showElement)
 
+  // This allows pausing and resuming the animation for elements in the trending container when clicked
+  // if (container === trendingContainer) {
+  //   showElement.addEventListener('click', () => {
+  //     showElement.classList.toggle('paused')
+  //   })
+  //   showElement.addEventListener('mouseleave', () => {
+  //     showElement.classList.remove('paused')
+  //   })
+  // }
     // click event listener to toggle the bookmark status and update its appearance
     const bookmarkIcon = showElement.querySelector('.bookmark')
     addBookmarkClickListener(show.id, bookmarkIcon)
@@ -366,11 +375,11 @@ document.getElementById('log-out').addEventListener('click', () => {
 })
 
 // The checkToken function checks if a token exists in the localStorage
-function checkToken() {
-  const token = localStorage.getItem('token')
-  if(!token) {
-    alert('Please sign in') 
-    // window.location.href = '/'
-    // console.log(window.location.href)
-  }
-}
+// function checkToken() {
+//   const token = localStorage.getItem('token')
+//   if(!token) {
+//     alert('Please sign in') 
+//     // window.location.href = '/'
+//     // console.log(window.location.href)
+//   }
+// }

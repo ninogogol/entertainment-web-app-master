@@ -126,7 +126,7 @@ function authenticate(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, SECRET_KEY);
-    req.username = decoded.username;
+    req.username = decoded.username
     next()
   } catch (err) {
     //res.status(401).json({ message: 'Invalid token' })
@@ -135,7 +135,7 @@ function authenticate(req, res, next) {
 }
 
 // Start the server on the specified port
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
+    console.log(`Server is running on port ${PORT}`)
 })
