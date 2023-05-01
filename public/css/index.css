@@ -75,6 +75,9 @@ header nav div img[alt="logo"] {
     width: 25px;
     height: 20px;
 }
+header nav div img[alt="logo"]:hover {
+    cursor: pointer;
+}
 
 header nav ul li a svg  * {
     transform-origin: 0 0;

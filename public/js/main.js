@@ -4,6 +4,7 @@ const recommendedContainer = document.getElementById('recommended-container')
 const h1 = document.querySelector('h1')
 const h2 = document.querySelector('h2')
 const search = document.getElementById('search')
+const logo = document.querySelector('img[alt="logo"]')
 
 const navigation = document.querySelectorAll('header nav ul li a')
 const filterHome = document.getElementById('filter-home')
@@ -202,16 +203,7 @@ Event listeners for filters: Home, Movies, TV Series, Bookmarks.
 Updates displayed content and active navigation state based on filter.
 */
 filterHome.addEventListener('click', () => {
-  search.value = ''
-  trendingContainer.style.display = null
-  h1.style.display = null
-  navigation.forEach(navItem => {
-    navItem.classList.remove('active')
-  })
-  filterHome.classList.add('active')
-  search.setAttribute('placeholder', 'Search for movies or TV series')
-  getTrendingShows()
-  getAllShows()
+  backToHomePage()
 })
 
 filterMovie.addEventListener('click', () => {
@@ -251,6 +243,11 @@ filterBookmarks.addEventListener('click', () => {
   h1.style.display = 'none'
   h2.innerText = 'Bookmarked Shows'
   getBookmarks()
+})
+
+// Event listener for logo
+logo.addEventListener('click', () => {
+  backToHomePage()
 })
 
 /**
@@ -401,4 +398,19 @@ function getOffset(el) {
     right: rect.right + window.scrollX,
     width: rect.right - rect.left
   }
+}
+
+// Function for logo icon and for home filter
+const backToHomePage = () => {
+  search.value = ''
+  trendingContainer.style.display = null
+  h1.style.display = null
+  h2.innerText = 'Recommended for you'
+  navigation.forEach(navItem => {
+    navItem.classList.remove('active')
+  })
+  filterHome.classList.add('active')
+  search.setAttribute('placeholder', 'Search for movies or TV series')
+  getTrendingShows()
+  getAllShows()
 }
