@@ -200,9 +200,19 @@ img[alt="thumbnails"] {
     display: flex;
     gap: 16px;
     width: 100%;
-    left: 0px;
     overflow: scroll;
     margin: 16px 0 24px 16px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+#trending-container img[alt="thumbnails"] {
+    height: 100%;
+    object-fit: cover;
+}
+#trending-container .show:last-child img[alt="thumbnails"] {
+    object-fit: cover;
+    object-position: 50% 0%;
 }
 
 #trending-container::-webkit-scrollbar {
@@ -213,30 +223,14 @@ img[alt="thumbnails"] {
     width: 0;
     height: 0;
 }
-#trending-container {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
 
-#trending-container .show {
-    animation: show 30s linear infinite;
-}
-
-#trending-container:hover .show {
-    animation-play-state: paused;
-}
-
-.show.paused {
-    animation-play-state: paused;
-}
-
-@keyframes show {
-    0% {
-        transform: translateX(0%);
-    }
-    100% {
-        transform: translateX(-100%);
-    }
+#trending-container .show img {
+    user-select: none;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
 }
 
 #trending-container h3 {
@@ -256,6 +250,12 @@ img[alt="thumbnails"] {
     border-radius: 8px;
     position: relative;
     cursor: pointer;  
+    display: inline-block;
+    animation: slide 20s linear infinite;
+}
+
+#trending-container:hover .show {
+    animation-play-state: paused;
 }
 
 #trending-container .info {
@@ -294,6 +294,16 @@ img[alt="thumbnails"] {
 .hidden,
 .hidden-bookmark-section {
     display: none;
+}
+
+/* Slide Animation */
+@keyframes slide {
+    0%, 100% {
+        transform: translateX(0%);
+    }
+    50% {
+        transform: translateX(-20%);
+    }
 }
 
 /* Styles for recommended section */

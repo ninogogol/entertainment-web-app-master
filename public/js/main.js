@@ -11,9 +11,6 @@ const filterMovie = document.getElementById('filter-movie')
 const filterTVSeries = document.getElementById('filter-tv-series')
 const filterBookmarks = document.getElementById('filter-bookmarks')
 
-// Call the checkToken function
-//checkToken()
-
 // Function to fetch trending shows from the server and display them
 const getTrendingShows = () => {
   axios.get('/data', {
@@ -193,15 +190,6 @@ const displayResults = (data, container) => {
     `
     container.appendChild(showElement)
 
-  // This allows pausing and resuming the animation for elements in the trending container when clicked
-  // if (container === trendingContainer) {
-  //   showElement.addEventListener('click', () => {
-  //     showElement.classList.toggle('paused')
-  //   })
-  //   showElement.addEventListener('mouseleave', () => {
-  //     showElement.classList.remove('paused')
-  //   })
-  // }
     // click event listener to toggle the bookmark status and update its appearance
     const bookmarkIcon = showElement.querySelector('.bookmark')
     addBookmarkClickListener(show.id, bookmarkIcon)
@@ -374,12 +362,43 @@ document.getElementById('log-out').addEventListener('click', () => {
   window.location.href = '/'
 })
 
-// The checkToken function checks if a token exists in the localStorage
-// function checkToken() {
-//   const token = localStorage.getItem('token')
-//   if(!token) {
-//     alert('Please sign in') 
-//     // window.location.href = '/'
-//     // console.log(window.location.href)
-//   }
-// }
+// Interactive Scrolling Mouse
+let pos = { x: 0 }
+
+// Function to handle the mousedown event
+const mouseDownHandler = function (e) {
+    pos = {
+        x: e.clientX,
+        left: trendingContainer.scrollLeft
+    }
+
+    trendingContainer.addEventListener('mousemove', mouseMoveHandler)
+    document.addEventListener('mouseup', mouseUpHandler)
+}
+
+// Function to handle the mousemove event
+const mouseMoveHandler = function (e) {
+  // How far the mouse has been moved
+  const dx = e.clientX - pos.x
+
+  trendingContainer.scrollLeft = pos.left - dx
+}
+
+const mouseUpHandler = () => {
+  trendingContainer.removeEventListener('mousemove', mouseMoveHandler)
+  document.removeEventListener('mouseup', mouseUpHandler)
+  trendingContainer.style.userSelect = 'none'
+}
+
+trendingContainer.onmousedown = mouseDownHandler
+
+// Function to get the offset of an element
+function getOffset(el) {
+  const rect = el.getBoundingClientRect()
+  return {
+    left: rect.left + window.scrollX,
+    top: rect.top + window.scrollY,
+    right: rect.right + window.scrollX,
+    width: rect.right - rect.left
+  }
+}

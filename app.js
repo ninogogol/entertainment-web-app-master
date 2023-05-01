@@ -111,7 +111,7 @@ app.post('/bookmark', authenticate, (req, res) => {
     users[userIndex] = user
     fs.writeFileSync(USERS_JSON_PATH, JSON.stringify(users, null, 2))
     res.json({ message: 'Bookmark successfully updated' })
-  })
+})
 
 
 // Middleware to authenticate user requests
