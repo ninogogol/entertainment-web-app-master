@@ -1,6 +1,6 @@
 # Entertainment Web App
 
-**A full-stack web application for browsing and bookmarking TV shows and movies, with search functionality and category filters. Users can sign up, log in, and manage their bookmarked shows. The application also supports searching for specific content. It is built using HTML, CSS, JavaScript, Node.js, Express, and the Axios library for making API calls.**
+**A full-stack web application for exploring and bookmarking TV shows and movies, with search functionality and category filters. Users can sign up, log in, and manage their bookmarked shows. The application also supports searching for specific content. Please note that video playback functionality is not supported. It is built using HTML, CSS, JavaScript, Node.js, Express, and the Axios library for making API calls.**
 
 ## Table of Contents
 
