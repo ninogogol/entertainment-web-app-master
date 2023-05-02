@@ -28,7 +28,7 @@
 - Install the required dependencies:
 ```npm install```
 
--Run the application:
+- Run the application:
 ```npm start```
 
 The application will be available at ```http://localhost:3000```.
