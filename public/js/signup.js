@@ -8,6 +8,12 @@ registerForm.addEventListener('submit', (event) => {
   const password = document.getElementById('password').value
   const repeatPassword = document.getElementById('repeatPassword').value
 
+  if(!isValidEmail(email)) {
+    errorMsg.className = 'error-msg-email'
+    errorMsg.innerText = 'Invalid email address'
+    registerForm.prepend(errorMsg)
+    return
+  }
   if (password !== repeatPassword) {
     alert('The entered passwords do not match. Please check them and try again.')
     return
@@ -39,3 +45,8 @@ registerForm.addEventListener('submit', (event) => {
       alert('Registration failed. Please try again.')
     })
 })
+
+const isValidEmail = (email) => {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+  return emailRegex.test(email)
+}

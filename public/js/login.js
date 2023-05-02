@@ -29,6 +29,6 @@ loginForm.addEventListener('submit', (event) => {
     })
     .catch(error => {
       console.error('Login failed', error)
-      alert('Login failed. User not found, please sign up!')
+      alert('Incorrect email or password. Please try again.')
     })
 })

@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 const fs = require('fs')
 const dotenv = require('dotenv')
 const path = require('path')
+const emailValidator = require('email-validator')
 
 const USERS_JSON_PATH = path.join(__dirname, 'database', 'users.json')
 const SHOWS_DATA_JSON_PATH = path.join(__dirname, 'database', 'data.json')
@@ -31,6 +32,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 // Handle sign-up requests
 app.post('/signup', (req, res) => {
   const { username, password, passwordRepeat } = req.body
+
+  if(!isValidEmail(username)) {
+    return res.status(400).json({message: 'Invalid email address'})
+  }
   if (password !== passwordRepeat) {
     return res.status(400).json({ message: 'Passwords do not match' })
   }
@@ -132,6 +137,15 @@ function authenticate(req, res, next) {
     //res.status(401).json({ message: 'Invalid token' })
     res.redirect('../login.html')
   }
+}
+
+/**
+ * Checks if the given email is valid using the email-validator library.
+ * @param {string} email - The email address to validate.
+ * @returns {boolean} True if the email is valid, false otherwise.
+ */
+function isValidEmail(email) {
+  return emailValidator.validate(email)
 }
 
 // Start the server on the specified port
