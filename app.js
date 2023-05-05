@@ -122,11 +122,12 @@ app.post('/bookmark', authenticate, (req, res) => {
 // Middleware to authenticate user requests
 function authenticate(req, res, next) {
   const tokenHeader = req.headers.authorization?.split(' ')[1]
-  //für den aufruf statischer dateien aus den authenticated
+  
+  // If the token is not in the header, check if it's in the query string
   const token = tokenHeader ? tokenHeader : req.query.token
+
   if (!token) {
     return res.redirect('../login.html')
-    //return res.status(401).json({ message: 'No token provided' })
   }
 
   try {
@@ -134,7 +135,6 @@ function authenticate(req, res, next) {
     req.username = decoded.username
     next()
   } catch (err) {
-    //res.status(401).json({ message: 'Invalid token' })
     res.redirect('../login.html')
   }
 }
