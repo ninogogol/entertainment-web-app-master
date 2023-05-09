@@ -151,3 +151,13 @@ p a {
         cursor: pointer;
     }
 }
+
+#description {
+    color: white;
+    margin-bottom: 40px;
+    font-weight: normal;
+}
+
+#header {
+    margin-bottom: 20px;
+}
